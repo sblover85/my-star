@@ -3,139 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>별별감성 보관함</title>
+    <title>별별감성</title>
     <style>
-        :root { --main-color: #ff8e8e; --bg-color: #fff9f9; }
-        body { font-family: 'Pretendard', sans-serif; margin: 0; background-color: var(--bg-color); color: #333; }
-        
-        /* 🖼️ 상단 헤더 이미지 (직접 올린 파일) */
-        .header { width: 100%; height: 216px; background: url('./header_bg.jpg') no-repeat center/cover; position: relative; }
-        
-        .container { padding: 20px; max-width: 500px; margin: 0 auto; }
-        
-        /* 📂 카테고리 버튼 그리드 */
-        .cat-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 25px; }
-        .cat-btn { position: relative; height: 130px; border-radius: 12px; overflow: hidden; cursor: pointer; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
-        .cat-btn img { width: 100%; height: 100%; object-fit: cover; }
-        .cat-name-wrap { position: absolute; bottom: 0; width: 100%; background: rgba(0,0,0,0.6); color: white; text-align: center; padding: 6px 0; font-size: 11px; font-weight: bold; }
-        
-        /* 🔗 SNS & 스토어 연결 (사라졌던 거 복구!) */
-        .sns-wrap { display: flex; justify-content: space-around; background: white; padding: 15px; border-radius: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); margin-bottom: 25px; }
-        .sns-item { text-decoration: none; font-size: 12px; color: #666; display: flex; flex-direction: column; align-items: center; flex: 1; }
-        .sns-icon { width: 35px; height: 35px; margin-bottom: 5px; border-radius: 8px; }
+        body { font-family: 'Pretendard', sans-serif; margin: 0; background-color: #f8f9fa; color: #333; line-height: 1.5; }
+        .container { max-width: 500px; margin: 0 auto; background: white; min-height: 100vh; }
 
-        /* 📝 리스트 스타일 */
-        .section-title { font-size: 16px; font-weight: bold; margin-bottom: 15px; display: flex; align-items: center; justify-content: space-between; }
-        .list-item { background: white; border-radius: 15px; padding: 12px; margin-bottom: 12px; display: flex; align-items: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05); position: relative; }
-        .thumb { width: 60px; height: 60px; border-radius: 10px; background: #eee; margin-right: 15px; object-fit: cover; }
-        .info { flex: 1; }
-        .info h4 { margin: 0 0 5px 0; font-size: 14px; }
-        .info p { margin: 0; font-size: 11px; color: #999; }
-        
-        /* ➕ 추가/삭제 버튼 */
-        .add-btn { position: fixed; bottom: 25px; right: 25px; width: 55px; height: 55px; background: var(--main-color); color: white; border: none; border-radius: 50%; font-size: 28px; box-shadow: 0 4px 12px rgba(255,142,142,0.4); cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 100; }
-        .delete-btn { position: absolute; top: 10px; right: 10px; border: none; background: none; color: #eee; font-size: 18px; }
+        /* 🖼️ 상단 메인 배너 */
+        .main-banner { width: 100%; height: 250px; background: url('header_bg.jpg') no-repeat center/cover; }
+
+        /* 📂 링크 버튼 구역 */
+        .link-section { padding: 20px; }
+        .big-btn { display: block; width: 100%; padding: 15px 0; border-radius: 12px; text-align: center; text-decoration: none; color: white; font-weight: bold; font-size: 16px; margin-bottom: 12px; border: none; cursor: pointer; }
+        .btn-orange { background: #ff7675; } /* 달봉이마켓 굿즈 */
+        .btn-blue { background: #45dcff; }   /* 달봉이마켓 아동복 */
+
+        /* 🔗 아이콘 SNS 구역 */
+        .sns-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; padding: 10px 0 30px; }
+        .sns-item { text-decoration: none; display: flex; flex-direction: column; align-items: center; font-size: 12px; color: #666; }
+        .sns-icon { width: 50px; height: 50px; border-radius: 12px; margin-bottom: 8px; object-fit: cover; }
+
+        /* 📸 하단 이미지 메뉴 (3개) */
+        .menu-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; padding: 0 10px 20px; }
+        .menu-item { position: relative; border-radius: 15px; overflow: hidden; height: 160px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .menu-item img { width: 100%; height: 100%; object-fit: cover; }
+        .menu-label { position: absolute; bottom: 0; width: 100%; background: rgba(255,255,255,0.8); text-align: center; padding: 8px 0; font-size: 12px; font-weight: bold; color: #333; }
     </style>
 </head>
 <body>
 
-<div class="header"></div>
-
 <div class="container">
-    <div class="cat-grid">
-        <div class="cat-btn" onclick="renderList('맛집제품리뷰')">
-            <img src="./cat_food.jpg">
-            <div class="cat-name-wrap">맛도리사냥꾼</div>
+    <div class="main-banner"></div>
+
+    <div class="link-section">
+        <a href="https://smartstore.naver.com/beolbeol" class="big-btn btn-orange">🛍️ 달봉이마켓 굿즈 보러가기</a>
+        <a href="https://smartstore.naver.com/beolbeol" class="big-btn btn-blue">👕 달봉이마켓 아동복 보러가기</a>
+
+        <div class="sns-grid">
+            <a href="https://blog.naver.com/sblover85" class="sns-item">
+                <img src="https://cdn-icons-png.flaticon.com/512/2111/2111537.png" class="sns-icon">
+                <span>블로그</span>
+            </a>
+            <a href="#" class="sns-item">
+                <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" class="sns-icon">
+                <span>유튜브</span>
+            </a>
+            <a href="#" class="sns-item">
+                <img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" class="sns-icon">
+                <span>인스타</span>
+            </a>
+            <a href="#" class="sns-item">
+                <img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png" class="sns-icon">
+                <span>틱톡</span>
+            </a>
         </div>
-        <div class="cat-btn" onclick="renderList('육아일상')">
-            <img src="./cat_kids.jpg">
-            <div class="cat-name-wrap">육아일상</div>
-        </div>
-        <div class="cat-btn" onclick="renderList('마켓상품')">
-            <img src="./cat_market.jpg">
-            <div class="cat-name-wrap">마켓상품</div>
+
+        <div class="menu-grid">
+            <div class="menu-item">
+                <img src="cat_food.jpg">
+                <div class="menu-label">맛도리사냥꾼</div>
+            </div>
+            <div class="menu-item">
+                <img src="cat_kids.jpg">
+                <div class="menu-label">육아일상</div>
+            </div>
+            <div class="menu-item">
+                <img src="cat_market.jpg">
+                <div class="menu-label">마켓상품</div>
+            </div>
         </div>
     </div>
-
-    <div class="sns-wrap">
-        <a href="https://blog.naver.com/sblover85" class="sns-item" target="_blank">
-            <img src="https://cdn-icons-png.flaticon.com/512/2111/2111537.png" class="sns-icon">블로그
-        </a>
-        <a href="https://smartstore.naver.com/beolbeol" class="sns-item" target="_blank">
-            <img src="https://cdn-icons-png.flaticon.com/512/1162/1162499.png" class="sns-icon">달봉이마켓
-        </a>
-        <a href="https://www.instagram.com" class="sns-item" target="_blank">
-            <img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" class="sns-icon">인스타
-        </a>
-    </div>
-
-    <div class="section-title">
-        <span id="listTitle">전체 기록</span>
-        <span onclick="renderList('전체')" style="font-size:12px; color:#999; cursor:pointer;">전체보기 ↺</span>
-    </div>
-
-    <div id="itemList"></div>
 </div>
-
-<button class="add-btn" onclick="addItem()">+</button>
-
-<script>
-    let items = JSON.parse(localStorage.getItem('myStarData')) || [];
-
-    function renderList(targetCat = '전체') {
-        const listDiv = document.getElementById('itemList');
-        const titleSpan = document.getElementById('listTitle');
-        listDiv.innerHTML = '';
-        titleSpan.innerText = targetCat === '전체' ? '전체 기록' : targetCat;
-        
-        const filtered = targetCat === '전체' ? items : items.filter(i => i.cat === targetCat);
-        
-        if(filtered.length === 0) {
-            listDiv.innerHTML = '<p style="text-align:center; color:#ccc; margin-top:30px; font-size:13px;">기록을 추가해보세요!</p>';
-            return;
-        }
-
-        [...filtered].reverse().forEach((item) => {
-            const realIdx = items.indexOf(item);
-            listDiv.innerHTML += `
-                <div class="list-item" onclick="window.open('${item.link}')">
-                    <img src="${item.img || 'https://via.placeholder.com/60'}" class="thumb">
-                    <div class="info">
-                        <h4>${item.title}</h4>
-                        <p>${item.cat} | ${item.date}</p>
-                    </div>
-                    <button class="delete-btn" onclick="event.stopPropagation(); deleteItem(${realIdx})">×</button>
-                </div>
-            `;
-        });
-    }
-
-    function addItem() {
-        const title = prompt("제목을 입력하세요");
-        if(!title) return;
-        const link = prompt("연결할 링크 주소(URL)");
-        const cat = prompt("카테고리: 맛집제품리뷰, 육아일상, 마켓상품");
-        const img = prompt("썸네일 이미지 주소(선택)");
-
-        const newItem = {
-            title, link, cat: cat || '기타', img,
-            date: new Date().toLocaleDateString()
-        };
-        items.push(newItem);
-        localStorage.setItem('myStarData', JSON.stringify(items));
-        renderList();
-    }
-
-    function deleteItem(idx) {
-        if(confirm('삭제할까요?')) {
-            items.splice(idx, 1);
-            localStorage.setItem('myStarData', JSON.stringify(items));
-            renderList();
-        }
-    }
-
-    renderList();
-</script>
 
 </body>
 </html>
