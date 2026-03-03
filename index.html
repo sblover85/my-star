@@ -5,77 +5,127 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>별별감성</title>
     <style>
-        body { font-family: 'Pretendard', sans-serif; margin: 0; background-color: #f8f9fa; color: #333; line-height: 1.5; }
-        .container { max-width: 500px; margin: 0 auto; background: white; min-height: 100vh; }
+        :root { --main-pink: #e89ab5; --main-blue: #7ec0c8; }
+        body { font-family: 'Pretendard', sans-serif; margin: 0; background-color: #f8f9fa; color: #333; }
+        .container { max-width: 500px; margin: 0 auto; background: white; min-height: 100vh; position: relative; }
 
-        /* 🖼️ 상단 메인 배너 */
+        /* 🏠 메인 섹션 */
+        #mainPage { display: block; }
         .main-banner { width: 100%; height: 250px; background: url('header_bg.jpg') no-repeat center/cover; }
-
-        /* 📂 링크 버튼 구역 */
         .link-section { padding: 20px; }
-        .big-btn { display: block; width: 100%; padding: 15px 0; border-radius: 12px; text-align: center; text-decoration: none; color: white; font-weight: bold; font-size: 16px; margin-bottom: 12px; border: none; cursor: pointer; }
-        .btn-orange { background: #e89ab5; } /* 달봉이마켓 굿즈 */
-        .btn-blue { background: #7ec0c8; }   /* 달봉이마켓 아동복 */
+        .big-btn { display: flex; align-items: center; justify-content: center; width: 100%; padding: 16px 0; border-radius: 12px; text-decoration: none; color: white; font-weight: bold; margin-bottom: 12px; border: none; cursor: pointer; gap: 8px; }
+        .btn-orange { background: var(--main-pink); }
+        .btn-blue { background: var(--main-blue); }
 
-       /* 🔗 SNS 아이콘 구역 (블로그 아이콘 수정) */
-        .sns-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; padding: 10px 0 30px; }
+        .sns-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; padding: 15px 0 30px; }
         .sns-item { text-decoration: none; display: flex; flex-direction: column; align-items: center; font-size: 12px; color: #666; }
         .sns-icon { width: 52px; height: 52px; border-radius: 14px; margin-bottom: 8px; object-fit: cover; }
 
-        /* 📸 하단 이미지 메뉴 (3개) */
-        .menu-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; padding: 0 10px 20px; }
-        .menu-item { position: relative; border-radius: 15px; overflow: hidden; height: 160px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .menu-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+        .menu-item { position: relative; border-radius: 15px; overflow: hidden; height: 160px; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         .menu-item img { width: 100%; height: 100%; object-fit: cover; }
-        .menu-label { position: absolute; bottom: 0; width: 100%; background: rgba(255,255,255,0.8); text-align: center; padding: 8px 0; font-size: 12px; font-weight: bold; color: #333; }
+        .menu-label { position: absolute; bottom: 0; width: 100%; background: rgba(255,255,255,0.9); text-align: center; padding: 8px 0; font-size: 12px; font-weight: bold; }
+
+        /* 📝 리스트 섹션 (처음엔 숨김) */
+        #listPage { display: none; padding: 20px; }
+        .list-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+        .back-btn { border: none; background: none; font-size: 20px; cursor: pointer; color: var(--main-pink); font-weight: bold; }
+        .list-item { background: #fff9f9; border-radius: 15px; padding: 15px; margin-bottom: 12px; display: flex; align-items: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05); position: relative; }
+        .thumb { width: 60px; height: 60px; border-radius: 10px; margin-right: 15px; object-fit: cover; }
+        .info h4 { margin: 0 0 5px 0; font-size: 15px; }
+        .info p { margin: 0; font-size: 12px; color: #888; }
+        .delete-btn { position: absolute; top: 10px; right: 10px; border: none; background: none; color: #ccc; cursor: pointer; }
+
+        .add-btn { position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; background: var(--main-pink); color: white; border: none; border-radius: 50%; font-size: 30px; box-shadow: 0 4px 15px rgba(232,154,181,0.4); cursor: pointer; display: none; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <div class="main-banner"></div>
-
-    <div class="link-section">
-        <a href="https://smartstore.naver.com/beolbeol" class="big-btn btn-orange">🛍️ 달봉이마켓 굿즈 보러가기</a>
-        <a href="https://smartstore.naver.com/beolbeol" class="big-btn btn-blue">👕 달봉이마켓 아동복 보러가기</a>
-
-        <div class="sns-grid">
-            <a href="https://blog.naver.com/sblover85" class="sns-item">
-               <img src="https://blog.kakaocdn.net/dn/866In/btrS0M7WInS/N6Wkk9Y4rK4KkKk4KkKk4K/img.png" class="sns-icon" alt="블로그">
-                <span>블로그</span>
-            </a>
-            <a href="#" class="sns-item">
-                <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" class="sns-icon">
-                <span>유튜브</span>
-            </a>
-            <a href="#" class="sns-item">
-                <img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" class="sns-icon">
-                <span>인스타</span>
-            </a>
-            <a href="#" class="sns-item">
-                <img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png" class="sns-icon">
-                <span>틱톡</span>
-            </a>
-        </div>
-
-        <div class="menu-grid">
-            <div class="menu-item">
-                <img src="cat_food.jpg">
-                <div class="menu-label">맛도리사냥꾼</div>
+    <div id="mainPage">
+        <div class="main-banner"></div>
+        <div class="link-section">
+            <a href="https://smartstore.naver.com/beolbeol" class="big-btn btn-orange" target="_blank">🛍️ 달봉이마켓 굿즈</a>
+            <a href="https://smartstore.naver.com/beolbeol" class="big-btn btn-blue" target="_blank">👕 달봉이마켓 아동복</a>
+            <div class="sns-grid">
+                <a href="https://blog.naver.com/sblover85" class="sns-item" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Naver_Blog_Logo.png/512px-Naver_Blog_Logo.png" class="sns-icon"><span>블로그</span></a>
+                <a href="#" class="sns-item"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" class="sns-icon"><span>유튜브</span></a>
+                <a href="#" class="sns-item"><img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" class="sns-icon"><span>인스타</span></a>
+                <a href="#" class="sns-item"><img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png" class="sns-icon"><span>틱톡</span></a>
             </div>
-            <div class="menu-item">
-                <img src="cat_kids.jpg">
-                <div class="menu-label">육아일상</div>
-            </div>
-            <div class="menu-item">
-                <img src="cat_market.jpg">
-                <div class="menu-label">마켓상품</div>
+            <div class="menu-grid">
+                <div class="menu-item" onclick="showList('맛집제품리뷰')"><img src="cat_food.jpg"><div class="menu-label">맛도리사냥꾼</div></div>
+                <div class="menu-item" onclick="showList('육아일상')"><img src="cat_kids.jpg"><div class="menu-label">육아일상</div></div>
+                <div class="menu-item" onclick="showList('마켓상품')"><img src="cat_market.jpg"><div class="menu-label">마켓상품</div></div>
             </div>
         </div>
     </div>
+
+    <div id="listPage">
+        <div class="list-header">
+            <button class="back-btn" onclick="showMain()">← 뒤로가기</button>
+            <h3 id="catTitle" style="margin:0;">리스트</h3>
+        </div>
+        <div id="itemList"></div>
+    </div>
 </div>
 
+<button id="addBtn" class="add-btn" onclick="addItem()">+</button>
+
+<script>
+    let items = JSON.parse(localStorage.getItem('myStarData')) || [];
+    let currentCat = '';
+
+    function showList(cat) {
+        currentCat = cat;
+        document.getElementById('mainPage').style.display = 'none';
+        document.getElementById('listPage').style.display = 'block';
+        document.getElementById('addBtn').style.display = 'flex';
+        document.getElementById('catTitle').innerText = cat;
+        renderItems();
+    }
+
+    function showMain() {
+        document.getElementById('mainPage').style.display = 'block';
+        document.getElementById('listPage').style.display = 'none';
+        document.getElementById('addBtn').style.display = 'none';
+    }
+
+    function renderItems() {
+        const listDiv = document.getElementById('itemList');
+        listDiv.innerHTML = '';
+        const filtered = items.filter(i => i.cat === currentCat);
+        if(filtered.length === 0) {
+            listDiv.innerHTML = '<p style="text-align:center; color:#999; margin-top:50px;">아직 기록이 없어요.</p>';
+            return;
+        }
+        [...filtered].reverse().forEach((item) => {
+            const realIdx = items.indexOf(item);
+            listDiv.innerHTML += `
+                <div class="list-item" onclick="window.open('${item.link}')">
+                    <img src="${item.img || 'https://via.placeholder.com/60'}" class="thumb">
+                    <div class="info"><h4>${item.title}</h4><p>${item.date}</p></div>
+                    <button class="delete-btn" onclick="event.stopPropagation(); deleteItem(${realIdx})">×</button>
+                </div>`;
+        });
+    }
+
+    function addItem() {
+        const title = prompt("제목을 입력하세요"); if(!title) return;
+        const link = prompt("링크 URL");
+        const img = prompt("이미지 주소(선택)");
+        items.push({ title, link: link || '#', cat: currentCat, img, date: new Date().toLocaleDateString() });
+        localStorage.setItem('myStarData', JSON.stringify(items));
+        renderItems();
+    }
+
+    function deleteItem(idx) {
+        if(confirm('삭제할까요?')) {
+            items.splice(idx, 1);
+            localStorage.setItem('myStarData', JSON.stringify(items));
+            renderItems();
+        }
+    }
+</script>
 </body>
 </html>
-
-
-
