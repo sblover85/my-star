@@ -2,155 +2,140 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>별별감성 콘텐츠 보관함</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>별별감성 보관함</title>
     <style>
-        :root { --main: #2563eb; --naver: #03c75a; --line: #e2e8f0; --store-pink: #ff6b6b; --store-blue: #4dabf7; }
-        body { font-family: -apple-system, sans-serif; background: #f1f5f9; margin: 0; padding: 0; display: flex; justify-content: center; }
-        .app-container { width: 100%; max-width: 450px; background: #fff; min-height: 100vh; position: relative; }
-        .hidden { display: none !important; }
+        :root { --main-color: #ff8e8e; --bg-color: #fff9f9; }
+        body { font-family: 'Pretendard', sans-serif; margin: 0; background-color: var(--bg-color); color: #333; line-height: 1.6; }
         
-        /* 🖼️ 헤더 높이 확장 및 중앙 위치 조정 */
-        header { border-bottom: 1px solid var(--line); text-align: center; background: #fff; position: sticky; top: 0; z-index: 10; }
-        header.home-header { padding: 0; border: none; height: 180px; overflow: hidden; display: flex; align-items: center; justify-content: center; } 
-        .header-logo { width: 100%; height: 100%; display: block; object-fit: cover; object-position: 50% 35%; } 
-        header.list-header { padding: 18px; }
-        header.list-header strong { font-size: 19px; color: #1e293b; }
+        /* 헤더: 직접 올린 이미지 사용 */
+        .header { width: 100%; height: 220px; background: url('header_bg.jpg') no-repeat center/cover; position: relative; display: flex; align-items: center; justify-content: center; }
+        .header::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.1); }
         
-        /* 버튼 및 그리드 */
-        .promo-section { padding: 15px; background: #fff; border-bottom: 8px solid #f1f5f9; }
-        .store-btn-group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 15px; }
-        .store-banner { padding: 14px; border-radius: 12px; color: #fff; display: flex; align-items: center; justify-content: center; text-decoration: none; font-weight: bold; font-size: 14px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08); transition: transform 0.1s; }
-        .store-banner:active { transform: scale(0.98); }
-        .bg-goods { background: linear-gradient(135deg, #ff8e53 0%, #ff6b6b 100%); }
-        .bg-kids { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
-        .sns-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; text-align: center; }
-        .sns-item { text-decoration: none; color: #64748b; font-size: 11px; font-weight: 600; }
-        .sns-icon-box { width: 50px; height: 50px; border-radius: 12px; margin: 0 auto 6px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 5px rgba(0,0,0,0.05); overflow: hidden; background: #fff; border: 1px solid #eee; }
-        .sns-img { width: 100%; height: 100%; object-fit: cover; }
-        .tiktok-logo { background: #000; width: 50px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin: 0 auto 6px; }
-        .tiktok-symbol { color: #fff; font-size: 26px; font-weight: bold; text-shadow: -2px -2px 0 #ff0050, 2px 2px 0 #00f2ea; }
-
-        .cat-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; padding: 20px 15px; }
-        .cat-btn { border-radius: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 150px; overflow: hidden; position: relative; border: none; padding: 0; }
-        .cat-bg-img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; }
-        .cat-name-wrap { width: 100%; padding: 10px 0; background: rgba(255, 255, 255, 0.88); z-index: 2; text-align: center; }
-        .cat-name { font-weight: 800; font-size: 13px; color: #1e293b; }
+        .container { padding: 20px; max-width: 500px; margin: 0 auto; }
+        
+        /* 카테고리 버튼: 직접 올린 이미지 사용 */
+        .cat-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 30px; }
+        .cat-btn { position: relative; height: 120px; border-radius: 15px; overflow: hidden; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .cat-btn img { width: 100%; height: 100%; object-fit: cover; transition: 0.3s; }
+        .cat-btn:hover img { transform: scale(1.1); }
+        .cat-name-wrap { position: absolute; bottom: 0; width: 100%; background: rgba(0,0,0,0.5); color: white; text-align: center; padding: 5px 0; font-size: 11px; font-weight: bold; }
+        
+        /* SNS 링크 스타일 */
+        .sns-wrap { display: flex; justify-content: space-around; background: white; padding: 15px; border-radius: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); margin-bottom: 30px; }
+        .sns-item { text-decoration: none; font-size: 13px; color: #666; display: flex; flex-direction: column; align-items: center; }
+        .sns-icon { width: 35px; height: 35px; margin-bottom: 5px; border-radius: 10px; }
 
         /* 리스트 스타일 */
-        .tabs { display: flex; padding: 10px; gap: 5px; background: #fff; border-bottom: 1px solid #eee; }
-        .tab { flex: 1; text-align: center; padding: 8px 0; border-radius: 8px; font-size: 11px; font-weight: bold; background: #f8fafc; color: #64748b; border: 1px solid #e2e8f0; }
-        .tab.active { background: var(--main); color: #fff; }
-        .search-area { padding: 10px; border-bottom: 1px solid #eee; }
-        .date-range { display: flex; gap: 5px; margin-bottom: 8px; }
-        .date-range input { flex: 1; padding: 8px; border: 1px solid #ddd; border-radius: 6px; font-size: 12px; }
-        .search-word-wrap input { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
-        table { width: 100%; border-collapse: collapse; }
-        .item-row { border-bottom: 1px solid #f1f5f9; }
-        .thumb-img { width: 60px; height: 60px; border-radius: 8px; object-fit: cover; background: #f1f5f9; }
-        .memo-in { width: 95%; border: 1px solid transparent; background: #fff9db; padding: 5px; border-radius: 6px; font-size: 11px; margin-top: 4px; }
-        .date-text { font-size: 10px; color: #94a3b8; }
-
-        .modal-body { background:#fff; width:85%; padding:25px; border-radius:24px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
-        .modal-body input, .modal-body select { width: 100%; padding: 12px; margin-bottom: 8px; border: 1px solid #ddd; border-radius: 10px; box-sizing: border-box; }
+        .list-item { background: white; border-radius: 15px; padding: 12px; margin-bottom: 12px; display: flex; align-items: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        .thumb { width: 60px; height: 60px; border-radius: 10px; background: #eee; margin-right: 15px; object-fit: cover; }
+        .info { flex: 1; }
+        .info h4 { margin: 0 0 5px 0; font-size: 15px; }
+        .info p { margin: 0; font-size: 12px; color: #888; }
+        
+        .add-btn { position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; background: var(--main-color); color: white; border: none; border-radius: 50%; font-size: 30px; box-shadow: 0 4px 15px rgba(255,142,142,0.4); cursor: pointer; display: flex; align-items: center; justify-content: center; }
     </style>
 </head>
 <body>
-<div class="app-container">
-    <div id="view-main">
-        <header class="home-header">
-            <img src="https://postfiles.pstatic.net/MjAyNjAzMDNfMjI3/MDAxNzcyNTE4NTA0MTg2.ssEgnkbDrztswBSp9IV2RIht3C_R0Dy2hLNfpkjKmwQg.mBftBvpTdOcjyjnR9jwUpVRaTo_obAJx1KwBjE9xzE4g.PNG/900%EF%BC%BFfile%EF%BC%BF00000000d7a47206a14b0ed058867bac.png?type=w773" class="header-logo">
-        </header>
-        <div class="promo-section">
-            <div class="store-btn-group">
-                <a href="https://smartstore.naver.com/dalbonge/category/dce0b25880ba45dbb29202bec4585089?cp=1" target="_blank" class="store-banner bg-goods">🛍️ 달봉이마켓 굿즈 보러가기</a>
-                <a href="https://smartstore.naver.com/dalbonge/category/97105cbf8a6440ab85f90ec80f3e99a3?cp=1" target="_blank" class="store-banner bg-kids">👕 달봉이마켓 아동복 보러가기</a>
-            </div>
-            <div class="sns-grid">
-                <a href="https://m.blog.naver.com/so_happy_sb" class="sns-item"><div class="sns-icon-box" style="background:#03c75a; color:#fff; font-size:20px; font-weight:900;">N</div>블로그</a>
-                <a href="https://youtube.com/@so_happy_sb" class="sns-item"><div class="sns-icon-box"><img src="https://upload.wikimedia.org/wikipedia/commons/e/ef/Youtube_logo.png" class="sns-img"></div>유튜브</a>
-                <a href="https://www.instagram.com/mugjinmom" class="sns-item"><div class="sns-icon-box"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Instagram_logo_2016.svg/2048px-Instagram_logo_2016.svg.png" class="sns-img"></div>인스타</a>
-                <a href="https://www.tiktok.com/@mugjinmom" class="sns-item"><div class="tiktok-logo"><div class="tiktok-symbol">♪</div></div>틱톡</a>
-            </div>
+
+<div class="header"></div>
+
+<div class="container">
+    <div class="cat-grid">
+        <div class="cat-btn" onclick="filterList('맛집제품리뷰')">
+            <img src="cat_food.jpg">
+            <div class="cat-name-wrap">맛도리사냥꾼</div>
         </div>
-        <div class="cat-grid">
-            <div class="cat-btn" onclick="openCat('맛집제품리뷰')">
-                <img src="https://postfiles.pstatic.net/MjAyNjAyMjBfMTE0/MDAxNzcxNTk4MTI4OTU1.hDIbvYlrRwv0F-0R3YeVgNgzJCEA5LI6mX52TKf5aDsg.GGTpJAFDXywAVJ5mnMCZzZW1uexTlv-Yyy7mqDYsE-og.JPEG/900%EF%BC%BF1771598126734.jpg?type=w773" class="cat-bg-img">
-                <div class="cat-name-wrap"><span class="cat-name">맛도리사냥꾼</span></div>
-            </div>
-            <div class="cat-btn" onclick="openCat('육아일상기록')">
-                <img src="https://postfiles.pstatic.net/MjAyNTA1MTVfMTE4/MDAxNzQ3MzE4NDg1MjU0.2r4lWsz3tvh2kL4CbbcbSL8gadWy9lKR6OzUu9ee8sQg.YpfbzklL0MBox1ZQa4XHP38NnnO-N2hYmPZzGrkVnP0g.JPEG/1747318481900.jpg?type=w773" class="cat-bg-img">
-                <div class="cat-name-wrap"><span class="cat-name">육아일상</span></div>
-            </div>
-            <div class="cat-btn" onclick="openCat('마켓상품')">
-                <img src="https://postfiles.pstatic.net/MjAyNjAxMTZfMTI2/MDAxNzY4NTc0OTcwMzk2.D0NxvCmCaw-oLfPGS0NcEWBdiW9xPT00zMCUBe31Sukg.-Te0IL8bPpjwmHnE1RtxVRKFov0UHCJtIrZx71VRyyUg.JPEG/900%EF%BC%BF1768574967729.jpg?type=w773" class="cat-bg-img">
-                <div class="cat-name-wrap"><span class="cat-name">마켓상품</span></div>
-            </div>
+        <div class="cat-btn" onclick="filterList('육아일상')">
+            <img src="cat_kids.jpg">
+            <div class="cat-name-wrap">육아일상</div>
+        </div>
+        <div class="cat-btn" onclick="filterList('마켓상품')">
+            <img src="cat_market.jpg">
+            <div class="cat-name-wrap">마켓상품</div>
         </div>
     </div>
 
-    <div id="view-list" class="hidden">
-        <header style="display:flex; justify-content:space-between; align-items:center;" class="list-header">
-            <button onclick="goHome()" style="border:none; background:none; color:var(--main); font-weight:bold;">홈</button>
-            <strong id="cat-title">카테고리</strong>
-            <button onclick="showAdd()" style="border:none; background:none; font-size:28px; color:var(--main);">+</button>
-        </header>
-        <div class="tabs"><div class="tab active" onclick="setFilt('ALL', this)">전체</div><div class="tab" onclick="setFilt('YT', this)">유튜브</div><div class="tab" onclick="setFilt('NV', this)">네이버</div><div class="tab" onclick="setFilt('INST', this)">인스타</div><div class="tab" onclick="setFilt('TT', this)">틱톡</div></div>
-        <div class="search-area">
-            <div class="date-range"><input type="date" id="start-date" onchange="render()"> ~ <input type="date" id="end-date" onchange="render()"></div>
-            <input type="text" id="search-word" placeholder="🔍 제목이나 메모 검색..." oninput="render()">
-        </div>
-        <table><tbody id="list-body"></tbody></table>
+    <div class="sns-wrap">
+        <a href="https://blog.naver.com/sblover85" class="sns-item" target="_blank">
+            <img src="https://cdn-icons-png.flaticon.com/512/2111/2111537.png" class="sns-icon">
+            블로그
+        </a>
+        <a href="https://smartstore.naver.com/beolbeol" class="sns-item" target="_blank">
+            <img src="https://cdn-icons-png.flaticon.com/512/1162/1162499.png" class="sns-icon">
+            스토어
+        </a>
+        <a href="#" class="sns-item">
+            <img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" class="sns-icon">
+            인스타
+        </a>
     </div>
 
-    <div id="modal-add" class="hidden" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); display:flex; align-items:center; justify-content:center; z-index:1000;">
-        <div class="modal-body">
-            <h3 id="modal-title" style="margin-top:0;">기록하기</h3>
-            <input type="text" id="in-t" placeholder="제목"><input type="text" id="in-img" placeholder="이미지 주소"><input type="text" id="in-u" placeholder="URL 링크">
-            <select id="in-p"><option value="NV">네이버</option><option value="YT">유튜브</option><option value="INST">인스타</option><option value="TT">틱톡</option></select>
-            <input type="date" id="in-d">
-            <button onclick="saveItem()" style="width:100%; padding:16px; background:var(--naver); color:#fff; border:none; border-radius:12px; font-weight:bold;">저장</button>
-            <button onclick="hideAdd()" style="width:100%; margin-top:12px; border:none; background:none; color:#94a3b8;">취소</button>
-        </div>
+    <div id="itemList">
+        <p style="text-align:center; color:#999;">기록을 추가해보세요! ✨</p>
     </div>
 </div>
 
-<script>
-    let curCat = ''; let curFilt = 'ALL'; let editIdx = -1;
-    const DB_KEY = 'dalbong_photo_db_v1';
-    let db = JSON.parse(localStorage.getItem(DB_KEY)) || [];
-    const pMap = { 'YT': '🔴', 'NV': '🟢', 'INST': '🟣', 'TT': '⚫' };
+<button class="add-btn" onclick="addItem()">+</button>
 
-    function openCat(c) { curCat = c; document.getElementById('cat-title').innerText = (c==='맛집제품리뷰'?'맛도리사냥꾼':(c==='육아일상기록'?'육아일상':c)); document.getElementById('view-main').classList.add('hidden'); document.getElementById('view-list').classList.remove('hidden'); render(); }
-    function goHome() { document.getElementById('view-main').classList.remove('hidden'); document.getElementById('view-list').classList.add('hidden'); }
-    function showAdd() { editIdx = -1; document.getElementById('modal-title').innerText = "기록하기"; document.getElementById('in-t').value = ''; document.getElementById('in-img').value = ''; document.getElementById('in-u').value = ''; document.getElementById('in-d').value = new Date().toISOString().split('T')[0]; document.getElementById('modal-add').classList.remove('hidden'); }
-    function showEdit(idx) { editIdx = idx; const item = db[idx]; document.getElementById('modal-title').innerText = "수정하기"; document.getElementById('in-t').value = item.t; document.getElementById('in-img').value = item.img || ''; document.getElementById('in-u').value = item.u; document.getElementById('in-p').value = item.p; document.getElementById('in-d').value = item.d; document.getElementById('modal-add').classList.remove('hidden'); }
-    function hideAdd() { document.getElementById('modal-add').classList.add('hidden'); }
-    function setFilt(f, el) { curFilt = f; document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active')); el.classList.add('active'); render(); }
-    function render() {
-        const body = document.getElementById('list-body'); body.innerHTML = '';
-        const word = document.getElementById('search-word').value.toLowerCase();
-        const start = document.getElementById('start-date').value;
-        const end = document.getElementById('end-date').value;
-        db.filter(i => {
-            const mCat = i.cat === curCat; const mFilt = (curFilt === 'ALL' || i.p === curFilt);
-            const mWord = (i.t.toLowerCase().includes(word) || (i.m && i.m.toLowerCase().includes(word)));
-            let mPer = true; if(start && i.d < start) mPer = false; if(end && i.d > end) mPer = false;
-            return mCat && mFilt && mWord && mPer;
-        }).reverse().forEach(item => {
-            const idx = db.indexOf(item);
-            const photoHtml = item.img ? `<img src="${item.img}" class="thumb-img">` : `<div class="thumb-img" style="display:flex; align-items:center; justify-content:center; font-size:20px;">🖼️</div>`;
-            body.innerHTML += `<tr class="item-row"><td onclick="showEdit(${idx})" style="padding:15px 10px; width:60px;">${photoHtml}</td><td onclick="showEdit(${idx})"><div style="font-weight:bold; color:#333; font-size:14px;">${pMap[item.p]||''} ${item.t}</div><div class="date-text">${item.d}</div></td><td align="center" style="width:40px;"><input class="memo-in" value="${item.m||''}" onchange="upd(${idx},'m',this.value)" placeholder="메모.." style="width:30px; margin-bottom:5px;"><a href="${item.u}" target="_blank" style="text-decoration:none; font-size:20px;">🔗</a></td><td align="center" style="width:40px;"><button onclick="del(${idx})" style="border:none; background:none; color:#f87171; font-size:20px;">×</button></td></tr>`;
+<script>
+    let items = JSON.parse(localStorage.getItem('myStarData')) || [];
+
+    function renderList(targetCat = '전체') {
+        const listDiv = document.getElementById('itemList');
+        listDiv.innerHTML = '';
+        
+        const filtered = targetCat === '전체' ? items : items.filter(i => i.cat === targetCat);
+        
+        if(filtered.length === 0) {
+            listDiv.innerHTML = '<p style="text-align:center; color:#999; margin-top:50px;">아직 기록이 없어요.</p>';
+            return;
+        }
+
+        filtered.reverse().forEach((item, idx) => {
+            listDiv.innerHTML += `
+                <div class="list-item" onclick="window.open('${item.link}')">
+                    <img src="${item.img || 'https://via.placeholder.com/60'}" class="thumb">
+                    <div class="info">
+                        <h4>${item.title}</h4>
+                        <p>${item.cat} | ${item.date}</p>
+                    </div>
+                    <button onclick="event.stopPropagation(); deleteItem(${items.length - 1 - idx})" style="border:none; background:none; color:#ccc;">×</button>
+                </div>
+            `;
         });
     }
-    function saveItem() {
-        const t = document.getElementById('in-t').value; const img = document.getElementById('in-img').value; const u = document.getElementById('in-u').value; const p = document.getElementById('in-p').value; const d = document.getElementById('in-d').value;
-        if(!t || !u || !d) return alert('필수 입력!');
-        if(editIdx > -1) { db[editIdx] = { ...db[editIdx], t, img, u, p, d }; } else { db.push({ cat:curCat, t, img, u, p, d, m:'' }); }
-        localStorage.setItem(DB_KEY, JSON.stringify(db)); hideAdd(); render();
+
+    function addItem() {
+        const title = prompt("제목을 입력하세요");
+        if(!title) return;
+        const link = prompt("연결할 링크 주소(URL)");
+        const cat = prompt("카테고리 (맛집제품리뷰 / 육아일상 / 마켓상품 중 선택)");
+        const img = prompt("썸네일 이미지 주소 (없으면 패스)");
+
+        const newItem = {
+            title, link, cat, img,
+            date: new Date().toLocaleDateString()
+        };
+        items.push(newItem);
+        localStorage.setItem('myStarData', JSON.stringify(items));
+        renderList();
     }
-    function upd(idx, f, v) { db[idx][f] = v; localStorage.setItem(DB_KEY, JSON.stringify(db)); }
-    function del(idx) { if(confirm('삭제?')){ db.splice(idx,1); localStorage.setItem(DB_KEY, JSON.stringify(db)); render(); } }
+
+    function deleteItem(idx) {
+        if(confirm('삭제할까요?')) {
+            items.splice(idx, 1);
+            localStorage.setItem('myStarData', JSON.stringify(items));
+            renderList();
+        }
+    }
+
+    function filterList(cat) {
+        renderList(cat);
+    }
+
+    renderList();
 </script>
+
 </body>
 </html>
