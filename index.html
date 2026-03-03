@@ -58,9 +58,9 @@
 <body>
 <div class="app-container">
     <div id="view-main">
-        <header class="home-header">
-            <img src="header_bg.jpg" class="header-logo">
-        </header>
+       <header class="home-header" onclick="openCat('전체보기')" style="cursor:pointer;">
+    <img src="header_bg.jpg" class="header-logo">
+</header>
         <div class="promo-section">
             <div class="store-btn-group">
                 <a href="https://smartstore.naver.com/dalbonge/category/dce0b25880ba45dbb29202bec4585089?cp=1" target="_blank" class="store-banner bg-goods">🛍️ 달봉이마켓 굿즈 보러가기</a>
@@ -121,7 +121,18 @@
     let db = JSON.parse(localStorage.getItem(DB_KEY)) || [];
     const pMap = { 'YT': '🔴', 'NV': '🟢', 'INST': '🟣', 'TT': '⚫' };
 
-    function openCat(c) { curCat = c; document.getElementById('cat-title').innerText = (c==='맛집제품리뷰'?'맛도리사냥꾼':(c==='육아일상기록'?'육아일상':c)); document.getElementById('view-main').classList.add('hidden'); document.getElementById('view-list').classList.remove('hidden'); render(); }
+    function openCat(c) { 
+        curCat = c; 
+        let title = c;
+        if(c === '맛집제품리뷰') title = '맛도리사냥꾼';
+        else if(c === '육아일상기록') title = '육아일상';
+        else if(c === '전체보기') title = '전체 콘텐츠'; 
+        
+        document.getElementById('cat-title').innerText = title; 
+        document.getElementById('view-main').classList.add('hidden'); 
+        document.getElementById('view-list').classList.remove('hidden'); 
+        render(); 
+    }
     function goHome() { document.getElementById('view-main').classList.remove('hidden'); document.getElementById('view-list').classList.add('hidden'); }
     function showAdd() { editIdx = -1; document.getElementById('modal-title').innerText = "기록하기"; document.getElementById('in-t').value = ''; document.getElementById('in-img').value = ''; document.getElementById('in-u').value = ''; document.getElementById('in-d').value = new Date().toISOString().split('T')[0]; document.getElementById('modal-add').classList.add('flex'); }
     function showEdit(idx) { editIdx = idx; const item = db[idx]; document.getElementById('modal-title').innerText = "수정하기"; document.getElementById('in-t').value = item.t; document.getElementById('in-img').value = item.img || ''; document.getElementById('in-u').value = item.u; document.getElementById('in-p').value = item.p; document.getElementById('in-d').value = item.d; document.getElementById('modal-add').classList.add('flex'); }
@@ -132,17 +143,23 @@
         const word = document.getElementById('search-word').value.toLowerCase();
         const start = document.getElementById('start-date').value;
         const end = document.getElementById('end-date').value;
-        db.filter(i => {
-            const mCat = i.cat === curCat; const mFilt = (curFilt === 'ALL' || i.p === curFilt);
-            const mWord = (i.t.toLowerCase().includes(word) || (i.m && i.m.toLowerCase().includes(word)));
-            let mPer = true; if(start && i.d < start) mPer = false; if(end && i.d > end) mPer = false;
-            return mCat && mFilt && mWord && mPer;
-        }).reverse().forEach(item => {
-            const idx = db.indexOf(item);
-            const photoHtml = item.img ? `<img src="${item.img}" class="thumb-img">` : `<div class="thumb-img" style="display:flex; align-items:center; justify-content:center; font-size:20px;">🖼️</div>`;
-            body.innerHTML += `<tr class="item-row"><td onclick="showEdit(${idx})" style="padding:15px 10px; width:60px;">${photoHtml}</td><td onclick="showEdit(${idx})"><div style="font-weight:bold; color:#333; font-size:14px;">${pMap[item.p]||''} ${item.t}</div><div class="date-text">${item.d}</div></td><td align="center" style="width:40px;"><input class="memo-in" value="${item.m||''}" onchange="upd(${idx},'m',this.value)" placeholder="메모.." style="width:50px; margin-bottom:5px;"><a href="${item.u}" target="_blank" style="text-decoration:none; font-size:20px;">🔗</a></td><td align="center" style="width:40px;"><button onclick="del(${idx})" style="border:none; background:none; color:#f87171; font-size:20px;">×</button></td></tr>`;
-        });
-    }
+       db.filter(i => {
+    // ✅ 이 줄이 핵심이야: 카테고리가 '전체보기'면 무조건 true, 아니면 선택한 카테고리만!
+    const mCat = (curCat === '전체보기') ? true : (i.cat === curCat); 
+    
+    const mFilt = (curFilt === 'ALL' || i.p === curFilt);
+    const mWord = (i.t.toLowerCase().includes(word) || (i.m && i.m.toLowerCase().includes(word)));
+    let mPer = true; 
+    if(start && i.d < start) mPer = false; 
+    if(end && i.d > end) mPer = false;
+    
+    return mCat && mFilt && mWord && mPer;
+}).reverse().forEach(item => {
+    const idx = db.indexOf(item);
+    const photoHtml = item.img ? `<img src="${item.img}" class="thumb-img">` : `<div class="thumb-img" style="display:flex; align-items:center; justify-content:center; font-size:20px;">🖼️</div>`;
+    body.innerHTML += `<tr class="item-row"><td onclick="showEdit(${idx})" style="padding:15px 10px; width:60px;">${photoHtml}</td><td onclick="showEdit(${idx})"><div style="font-weight:bold; color:#333; font-size:14px;">${pMap[item.p]||''} ${item.t}</div><div class="date-text">${item.d}</div></td><td align="center" style="width:40px;"><input class="memo-in" value="${item.m||''}" onchange="upd(${idx},'m',this.value)" placeholder="메모.." style="width:50px; margin-bottom:5px;"><a href="${item.u}" target="_blank" style="text-decoration:none; font-size:20px;">🔗</a></td><td align="center" style="width:40px;"><button onclick="del(${idx})" style="border:none; background:none; color:#f87171; font-size:20px;">×</button></td></tr>`;
+});
+        }
     function saveItem() {
         const t = document.getElementById('in-t').value; const img = document.getElementById('in-img').value; const u = document.getElementById('in-u').value; const p = document.getElementById('in-p').value; const d = document.getElementById('in-d').value;
         if(!t || !u || !d) return alert('필수 입력!');
@@ -154,4 +171,5 @@
 </script>
 </body>
 </html>
+
 
